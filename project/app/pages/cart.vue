@@ -3,16 +3,17 @@ const cartStore = useCartStore()
 </script>
 
 <template>
-    <UButton
-    to="/"
-    icon="i-lucide-chevron-left"
-    variant="ghost"
-    color="neutral"
-  > Continue Shopping </UButton>
- <div
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+  <!-- LEFT COLUMN -->
+  <div class="lg:col-span-2">
+
+    <div
   v-if="cartStore.items.length === 0"
   class="text-center py-20"
 >
+<div class="flex flex-col items-center justify-center min-h-[60vh] lg:translate-x-1/4">
   <h2 class="text-3xl font-bold">
     Your cart is empty
   </h2>
@@ -28,10 +29,11 @@ const cartStore = useCartStore()
     Continue Shopping
   </UButton>
 </div>
+</div>
 
-<div v-else>
+    <div v-else>
   
-  <div class="container mx-auto px-6 py-12">
+  <div class="container mx-auto px-8 py-12">
 
     <h1 class="text-4xl font-bold mb-10">
       Shopping Cart
@@ -65,15 +67,112 @@ const cartStore = useCartStore()
         <p class="mt-2">
           Quantity: {{ item.quantity }}
         </p>
+        <div class="flex items-center gap-4 mt-4">
+
+  <UButton
+    icon="i-lucide-minus"
+    color="neutral"
+    variant="outline"
+    @click="cartStore.decreaseQuantity(item.id)"
+  />
+
+  <span class="text-lg font-semibold">
+    {{ item.quantity }}
+  </span>
+
+  <UButton
+    icon="i-lucide-plus"
+    color="primary"
+    @click="cartStore.increaseQuantity(item.id)"
+  />
+  <UButton
+  color="error"
+  variant="soft"
+  icon="i-lucide-trash-2"
+  @click="cartStore.removeItem(item.id)"
+>
+  Remove
+</UButton>
+
+
+</div>
 
       </div>
 
     </div>
 
   </div>
+  
+ 
+
+  
+
+
+</div>
+
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div
+    v-if="cartStore.items.length > 0"
+    class="lg:pt-28 lg:pr-6"
+  >
+
+     <div class="mt-36 lg:mt-12 container mx-auto px-8">
+
+    
+    <UCard>
+
+      <h2 class="text-2xl font-bold mb-6">
+        Order Summary
+      </h2>
+
+      <div class="space-y-4">
+
+        <div class="flex justify-between">
+          <span>Items</span>
+          <span>{{ cartStore.totalItems }}</span>
+        </div>
+
+        <div class="flex justify-between">
+          <span>Subtotal</span>
+          <span>${{ cartStore.totalPrice.toFixed(2) }}</span>
+        </div>
+
+        <div class="flex justify-between">
+          <span>Shipping</span>
+          <span class="text-green-600">
+            Free
+          </span>
+        </div>
+
+        <UDivider />
+
+        <div class="flex justify-between text-xl font-bold">
+          <span>Total</span>
+          <span>
+            ${{ cartStore.totalPrice.toFixed(2) }}
+          </span>
+        </div>
+
+        <UButton
+            to="/checkout"
+          block
+          size="xl"
+          class="mt-6"
+        >
+          Checkout
+        </UButton>
+
+      </div>
+
+    </UCard>
+
+  </div>
+
+  </div>
 
 </div>
 </template>
-
 
 

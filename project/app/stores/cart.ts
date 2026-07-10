@@ -25,9 +25,51 @@ export const useCartStore = defineStore("cart", () => {
     }
   }
 
+  const increaseQuantity = (id: number) => {
+  const item = items.value.find(item => item.id === id)
+
+  if (item) {
+    item.quantity++
+  }
+}
+
+const decreaseQuantity = (id: number) => {
+  const item = items.value.find(item => item.id === id)
+
+  if (!item) return
+
+  if (item.quantity > 1) {
+    item.quantity--
+  }
+}
+
+const removeItem = (id: number) => {
+  items.value = items.value.filter(item => item.id !== id)
+}
+
+const totalItems = computed(() => 
+    items.value.reduce(
+        (total, item) => total + item.quantity,
+        0
+    
+    )
+)
+
+const totalPrice = computed(()=>
+    items.value.reduce(
+        (total, items) => total +items.price * items.quantity,
+        0
+    )
+)
+
   return {
     items,
-    addItem
+    addItem,
+    increaseQuantity,
+    decreaseQuantity,
+    removeItem,
+    totalItems,
+    totalPrice
   }
 
 })
