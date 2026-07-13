@@ -1,6 +1,8 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
 import type { Product } from "~/types/products"
+import {computed } from "vue"
+import { onMounted } from "vue"
 
 export interface CartItem extends Product {
   quantity: number
@@ -9,6 +11,21 @@ export interface CartItem extends Product {
 export const useCartStore = defineStore("cart", () => {
 
   const items = ref<CartItem[]>([])
+
+ if(import.meta.client){
+    const savedCart = localStorage.getItem("cart")
+    console.log("savedCart =", savedCart)
+    if(savedCart){
+        items.value = JSON.parse(savedCart)
+    }
+    console.log("items after loading=", items.value)
+  }
+
+  const saveCart = () => {
+  if (import.meta.client) {
+    localStorage.setItem("cart", JSON.stringify(items.value))
+  }
+}   
 
   const addItem = (product: Product) => {
     const existingItem = items.value.find(
@@ -23,6 +40,7 @@ export const useCartStore = defineStore("cart", () => {
         quantity: 1
       })
     }
+    saveCart()
   }
 
   const increaseQuantity = (id: number) => {
@@ -30,6 +48,7 @@ export const useCartStore = defineStore("cart", () => {
 
   if (item) {
     item.quantity++
+    saveCart()
   }
 }
 
@@ -40,18 +59,22 @@ const decreaseQuantity = (id: number) => {
 
   if (item.quantity > 1) {
     item.quantity--
+    saveCart()
   }
 }
 
 const removeItem = (id: number) => {
   items.value = items.value.filter(item => item.id !== id)
+  saveCart()
 }
+
+
+
 
 const totalItems = computed(() => 
     items.value.reduce(
         (total, item) => total + item.quantity,
         0
-    
     )
 )
 

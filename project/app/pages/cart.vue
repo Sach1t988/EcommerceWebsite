@@ -1,5 +1,8 @@
 <script setup lang="ts">
 const cartStore = useCartStore()
+
+console.log("Cart page items:", cartStore.items)
+console.log("Cart page length:", cartStore.items.length)
 </script>
 
 <template>
@@ -9,6 +12,7 @@ const cartStore = useCartStore()
   <!-- LEFT COLUMN -->
   <div class="lg:col-span-2">
 
+    
     <div
   v-if="cartStore.items.length === 0"
   class="text-center py-20"
@@ -30,6 +34,7 @@ const cartStore = useCartStore()
   </UButton>
 </div>
 </div>
+
 
     <div v-else>
   
@@ -109,6 +114,7 @@ const cartStore = useCartStore()
 
 
 </div>
+
 
   </div>
 
