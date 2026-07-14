@@ -10,7 +10,7 @@ console.log("Cart page length:", cartStore.items.length)
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
   <!-- LEFT COLUMN -->
-  <div class="lg:col-span-2">
+  <div class="lg:col-span-2 min-w-0">
 
     
     <div
@@ -38,7 +38,7 @@ console.log("Cart page length:", cartStore.items.length)
 
     <div v-else>
   
-  <div class="container mx-auto px-8 py-12">
+  <div class="py-12">
 
     <h1 class="text-4xl font-bold mb-10">
       Shopping Cart
@@ -47,7 +47,7 @@ console.log("Cart page length:", cartStore.items.length)
     <div
       v-for="item in cartStore.items"
       :key="item.id"
-      class="flex items-center gap-6 border rounded-xl p-6 mb-6"
+      class="flex items-center gap-6 border rounded-xl p-6 mb-6 min-w-0"
     >
 
       <NuxtImg
@@ -55,7 +55,7 @@ console.log("Cart page length:", cartStore.items.length)
         class="h-32 w-32 object-contain"
       />
 
-      <div class="flex-1">
+      <div class="flex-1 min-w-0">
 
         <h2 class="text-xl font-semibold">
           {{ item.title }}
@@ -121,10 +121,10 @@ console.log("Cart page length:", cartStore.items.length)
   <!-- RIGHT COLUMN -->
   <div
     v-if="cartStore.items.length > 0"
-    class="lg:pt-28 lg:pr-6"
+    class="lg:pr-6"
   >
 
-     <div class="mt-36 lg:mt-12 container mx-auto px-8">
+     <div class="py-12">
 
     
     <UCard>

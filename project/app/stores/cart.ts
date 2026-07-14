@@ -12,14 +12,15 @@ export const useCartStore = defineStore("cart", () => {
 
   const items = ref<CartItem[]>([])
 
- if(import.meta.client){
+  const loadCart = () => {
+  if (import.meta.client) {
     const savedCart = localStorage.getItem("cart")
-    console.log("savedCart =", savedCart)
-    if(savedCart){
-        items.value = JSON.parse(savedCart)
+    if (savedCart) {
+      items.value = JSON.parse(savedCart)
     }
-    console.log("items after loading=", items.value)
   }
+}
+ 
 
   const saveCart = () => {
   if (import.meta.client) {
@@ -87,6 +88,7 @@ const totalPrice = computed(()=>
 
   return {
     items,
+    loadCart,
     addItem,
     increaseQuantity,
     decreaseQuantity,

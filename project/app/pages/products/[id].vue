@@ -15,9 +15,6 @@ const {addToCart} = useCart()
 </script>
 
 
-
-
-
 <template>
     <div class="py-6">
   <UButton
