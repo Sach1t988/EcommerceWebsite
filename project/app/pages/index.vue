@@ -10,10 +10,25 @@ const items = [
 
 import { type Product } from '~/types/products';
 import Cart from './cart.vue';
+import { computed, ref } from 'vue';
 
 const {data: products,error} = await useFetch<Product[]>(()=>
     `https://fakestoreapi.com/products`
 )
+
+const searchQuery = ref("")
+
+const filteredProducts = computed(() => {
+  if (!products.value) return []
+
+  return products.value.filter((product) => {
+    return product.title
+      .toLowerCase()
+      .includes(searchQuery.value.toLowerCase())
+  })
+})
+
+
 
 const toast = useToast()
 
@@ -73,7 +88,7 @@ const {addToCart} = useCart()
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
         <UCard
-          v-for="product in products"
+          v-for="product in filteredProducts"
           :key="product.id"
         >
         <NuxtLink :to="`/products/${product.id}`">

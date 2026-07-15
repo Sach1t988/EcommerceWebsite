@@ -1,4 +1,12 @@
 <script setup lang="ts">
+const searchQuery = ref("")
+import { computed } from "vue"
+
+
+const filteredProducts = computed(() => {
+    return []
+})
+
 
 </script>
 
@@ -14,7 +22,17 @@
             <span class ="text-3xl font-extrabold" style="color: #1DCF64;"> Ecommerce</span>
             </NuxtLink>
 
-            <span>"here goes a search bar"</span>
+            <span>
+                <UInput
+                    v-model="searchQuery"
+                    placeholder="Search products..."
+                    icon="i-lucide-search"
+                    /> 
+
+                    <p>Search: {{ searchQuery }}</p>
+<p>Products shown: {{ filteredProducts.length }}</p>
+           </span>
+           
 
             <div class="flex items-center gap-8 text-lg font-extrabold">
                 <UButton 
@@ -38,6 +56,9 @@
     </UButton>
             </div>
         </nav>
+        
+    
+
     </UContainer>
    </header>
 </template>
