@@ -16,16 +16,37 @@ const {data: products,error} = await useFetch<Product[]>(()=>
     `https://fakestoreapi.com/products`
 )
 
-const searchQuery = ref("")
+const searchQuery = useSearchQuery()
+
+// const filteredProducts = computed(() => {
+//   if (!products.value) return []
+//   console.log(products.value)
+
+//   return products.value.filter((product) => {
+//     return product.title
+//       .toLowerCase()
+//       .includes(searchQuery.value.toLowerCase())
+//   })
+// })
 
 const filteredProducts = computed(() => {
   if (!products.value) return []
 
-  return products.value.filter((product) => {
-    return product.title
+  console.log("Search:", searchQuery.value)
+
+  const result = products.value.filter(product => {
+    const matches = product.title
       .toLowerCase()
       .includes(searchQuery.value.toLowerCase())
+
+    console.log(product.title, "=>", matches)
+
+    return matches
   })
+
+  console.log("Result:", result)
+
+  return result
 })
 
 

@@ -1,11 +1,8 @@
 <script setup lang="ts">
-const searchQuery = ref("")
-import { computed } from "vue"
+
+const searchQuery = useSearchQuery()
 
 
-const filteredProducts = computed(() => {
-    return []
-})
 
 
 </script>
@@ -27,10 +24,7 @@ const filteredProducts = computed(() => {
                     v-model="searchQuery"
                     placeholder="Search products..."
                     icon="i-lucide-search"
-                    /> 
-
-                    <p>Search: {{ searchQuery }}</p>
-<p>Products shown: {{ filteredProducts.length }}</p>
+                    />
            </span>
            
 
