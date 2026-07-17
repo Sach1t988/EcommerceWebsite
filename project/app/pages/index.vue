@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware:"auth"
+})
 const items = [
   'https://picsum.photos/640/640?random=1',
   'https://picsum.photos/640/640?random=2',
@@ -32,19 +35,19 @@ const searchQuery = useSearchQuery()
 const filteredProducts = computed(() => {
   if (!products.value) return []
 
-  console.log("Search:", searchQuery.value)
+  // console.log("Search:", searchQuery.value)
 
   const result = products.value.filter(product => {
     const matches = product.title
       .toLowerCase()
       .includes(searchQuery.value.toLowerCase())
 
-    console.log(product.title, "=>", matches)
+    // console.log(product.title, "=>", matches)
 
     return matches
   })
 
-  console.log("Result:", result)
+  // console.log("Result:", result)
 
   return result
 })
@@ -54,6 +57,7 @@ const filteredProducts = computed(() => {
 const toast = useToast()
 
 const {addToCart} = useCart()
+const {logout} = useAuth()
 
 
 </script>
@@ -187,6 +191,14 @@ const {addToCart} = useCart()
       </div>
 
     </div>
+     <div class="flex justify-center mt-8">
+  <UButton
+    color="error"
+    @click="logout"
+  >
+    Logout
+  </UButton>
+</div>
 
   </div>
 </template>

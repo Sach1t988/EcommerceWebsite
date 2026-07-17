@@ -9,7 +9,8 @@ const searchQuery = useSearchQuery()
 
 
 <template>
-   <header class="bg-default">
+   <header
+   class="sticky top-0 z-50 bg-white shadow-md" >
     <UContainer>
         <nav class="flex h-20 items-center justify-between">
             <NuxtLink 
